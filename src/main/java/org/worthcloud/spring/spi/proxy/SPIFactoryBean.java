@@ -50,7 +50,7 @@ public class SPIFactoryBean<T> implements FactoryBean<T> , BeanFactoryAware  , S
 
     @Override
     public boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
-        log.info( "SPIFactoryBean : spring event : {}" , eventType );
+//        log.info( "SPIFactoryBean : spring event : {} . tips: junit test will mock the applicationEvent . " , eventType );
         return ApplicationReadyEvent.class.isAssignableFrom(eventType);
     }
 
