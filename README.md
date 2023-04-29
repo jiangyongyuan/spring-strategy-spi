@@ -1,6 +1,6 @@
 
 
-# strategy api in Spring system
+# Strategy API in Spring system
 
 ### 介绍
 
@@ -21,8 +21,8 @@
 
 ### 核心技术
 
-Spring-strategy-spi 希望提供一种标准、简单、通用的方法，通过key去获取已经注册的服务，而无需自己去将key、Bean put到自定义的一个Factory中。
-Spring-strategy-spi 提供 `SPI<ParameterizedType>.class` 代理类接口，该代理类会加载`<ParameterizedType>`定义的多个策略实现。
+Spring-strategy-spi 希望提供一种标准、简单、通用的方法，通过key去获取已经注册的服务，而无需自己去将key、bean put到自定义的一个Factory中。
+Spring-strategy-spi 提供 `SPI<Class>` 代理类，该代理类会加载`<Class>`定义的多个策略实现。
 每个策略类的key，通过注解`@SPIName(key)`定义，以下是代码示例：
 
 ```java
@@ -63,14 +63,51 @@ public class ITestB implements ITest{
 
 ```
 
-ITest的实现不用去定义key的接口，可阅读性并没有`SPIName`注解来得好。
-不用再为ITest去定义对应的ITestFactory，使用SPI<ITest>即可通过对应的key进行获取。
+ITest的实现不用去定义策略name的接口，因为加的策略name可阅读性并没有`SPIName`注解来得好。
+不用再为ITest去定义对应的ITestFactory，使用SPI<ITest>即可通过对应的name进行获取。
 
 ### 实现原理
 
 定义了一个SPI代理接口，在属性解析到对应的参数时，生成代理类。在项目启动完成后，通过BeanFactory获取全部的实现，读取对应的SPIName定义的key，设置default的实现。
 即完成了Spring中list bean到map bean 的一个实现。具体的话看下源码实现，整个实现非常简单。
 
+
+### SPI Wrapper 的思路
+
+如果需要dubbo spi的Wrapper的机制，可以通过aop的方式定义，往往项目里面可能不需要很多层的嵌套，没必要进行一个可嵌套的Wrapper设计。
+
+以下是Spring aop的一个demo参考：
+
+```java
+@Slf4j
+@Aspect
+@Component
+public class SPIWrapper1 implements Ordered {
+
+    @Pointcut(value = "execution(* com.worthcloud.demo.spi.SPITest.test(..))" )
+    public void test(){
+    }
+
+    @Before(value = "com.worthcloud.demo.spi.SPIWrapper1.test() && args(name)" )
+    public void before( String name  ) throws Throwable{
+        log.info("SPIWrapper 1 invoke : test ");
+    }
+
+    @AfterReturning(value = "com.worthcloud.demo.spi.SPIWrapper1.test()" ,returning = "retVal")
+    public void after( String retVal ) throws Throwable{
+        log.info("retVal 1 = " + retVal );
+    }
+
+
+    @Override
+    public int getOrder() {
+        return 2;
+    }
+}
+```
+
+
+###
 
 
 # The strategy api in Spring system
@@ -89,7 +126,7 @@ Spring-Strategy-Spi provides a more pragmatic approach to obtain a strategy bean
 
 #### Introduction
 
-Spring-Strategy-Spi provide `SPI<ParameterizedType>.class` proxy bean . which hold the multiple implementations of the `ParameterizedType` interface.
+Spring-Strategy-Spi provide `SPI<Class>` proxy bean . which hold the multiple implementations of the `<Class>` interface.
 The multiple strategy bean's key define by the `@SPIName` annotation , here is the example :
 
 ```java
