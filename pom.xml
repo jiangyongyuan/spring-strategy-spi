@@ -3,11 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <groupId>org.worthcloud</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>io.github.jiangyongyuan</groupId>
+    <version>1.0</version>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-strategy-spi</artifactId>
-
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -65,6 +64,89 @@
         </dependencies>
     </dependencyManagement>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://github.com/jiangyongyuan/spring-strategy-spi/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>jiang.yy</id>
+            <name>jiang yongyuan</name>
+            <email>jiang.yy@qq.com</email>
+            <organization>jiangyongyuan</organization>
+            <organizationUrl>io.github.jiangyongyuan</organizationUrl>
+            <!--<roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>-->
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git//github.com/jiangyongyuan/spring-strategy-spi.git</connection>
+        <developerConnection>scm:git:git//github.com/jiangyongyuan/spring-strategy-spi.git</developerConnection>
+        <url>https://github.com/jiangyongyuan/spring-strategy-spi</url>
+        <tag>HEAD</tag>
+    </scm>
 
 
 </project>
