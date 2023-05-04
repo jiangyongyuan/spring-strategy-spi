@@ -114,9 +114,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <keyname>63453187</keyname>
+                            <passphraseServerId>63453187</passphraseServerId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
+    <name>spring strategy spi</name>
+    <description> the strategy spi for spring project </description>
+    <url>https://github.com/jiangyongyuan/spring-strategy-spi</url>
 
     <licenses>
         <license>
