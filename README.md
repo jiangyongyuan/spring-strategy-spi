@@ -2,8 +2,6 @@
 
 # Strategy API in Spring system
 
-[Maven central](https://mvnrepository.com/artifact/io.github.jiangyongyuan/spring-strategy-spi/1.0)]
-
 ### 介绍
 
 策略模式是一种行为设计模式，在运行时根据参数选择对应的算法。
@@ -74,6 +72,8 @@ ITest的实现不用去定义策略name的接口，因为加的策略name可阅�
 即完成了Spring中list bean到map bean 的一个实现。具体的话看下源码实现，整个实现非常简单。
 
 ### 使用
+
+[Maven central](https://mvnrepository.com/artifact/io.github.jiangyongyuan/spring-strategy-spi/1.0)
 
 ```xml
 <dependency>
