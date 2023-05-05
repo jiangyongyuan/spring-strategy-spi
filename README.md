@@ -2,7 +2,7 @@
 
 # Strategy API in Spring system
 
-[![Maven central]()](https://mvnrepository.com/artifact/io.github.jiangyongyuan/spring-strategy-spi/1.0)
+[Maven central](https://mvnrepository.com/artifact/io.github.jiangyongyuan/spring-strategy-spi/1.0)]
 
 ### 介绍
 
