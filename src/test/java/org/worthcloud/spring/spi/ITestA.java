@@ -13,4 +13,9 @@ public class ITestA implements ITest{
         log.info("ITestA helloWorld ! ");
     }
 
+    @Override
+    public void testArgs(String name) {
+        log.info("ItestA testArgs ");
+    }
+
 }

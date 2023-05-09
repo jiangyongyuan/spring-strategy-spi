@@ -2,6 +2,7 @@ package org.worthcloud.spring.spi.proxy;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -33,9 +34,11 @@ public class SPIFactoryBean<T> implements FactoryBean<T> , BeanFactoryAware  , S
 
     @Override
     public T getObject() throws Exception {
-        return (T)Proxy.newProxyInstance( this.getClass().getClassLoader()
-                , new Class[]{interfaceClass}
-                , proxy ) ;
+        ProxyFactory proxyFactory = new ProxyFactory();
+        proxyFactory.setTarget( proxy );
+        proxyFactory.addInterface( interfaceClass );
+
+        return (T)proxyFactory.getProxy();
     }
 
     @Override

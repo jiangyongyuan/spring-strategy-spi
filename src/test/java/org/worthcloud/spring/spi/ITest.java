@@ -4,4 +4,6 @@ public interface ITest {
 
     public void helloWorld();
 
+    public void testArgs( String name );
+
 }

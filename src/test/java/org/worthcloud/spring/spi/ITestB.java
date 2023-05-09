@@ -7,8 +7,15 @@ import org.springframework.stereotype.Service;
 @Service
 @SPIName("B")
 public class ITestB implements ITest{
+
     @Override
     public void helloWorld() {
         log.info("ITestB helloWorld ! ");
     }
+
+    @Override
+    public void testArgs(String name) {
+        log.info("ItestB testArgs ");
+    }
+
 }

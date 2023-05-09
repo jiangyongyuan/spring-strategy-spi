@@ -3,6 +3,7 @@ package org.worthcloud.spring.spi.proxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.worthcloud.spring.spi.SPI;
 import org.worthcloud.spring.spi.SPIName;
 
 import java.lang.reflect.InvocationHandler;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
-public class SPIProxy<T> implements InvocationHandler  {
+public class SPIProxy<T> implements SPI {
 
     T strategyClass ;
 
@@ -24,32 +25,10 @@ public class SPIProxy<T> implements InvocationHandler  {
     //默认的key实现
     public static final String DEFAULT_STRATEGY_KEY = "DEFAULT";
 
-    public static final String SPI_PROXY_METHOD = "strategy";
-
     public SPIProxy(T argType ) {
         //target class
         strategyClass = argType;
     }
-
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if( method.getName().equalsIgnoreCase( SPI_PROXY_METHOD )){
-
-            Object strategy = args[0];
-
-            if( !isReady ){
-                log.warn(" SPI<{}> not ready , maybe could not found the strategy bean if circular." , strategyClass );
-
-                return beans.get( strategy );
-            }
-
-            Object bean = beans.get( strategy );
-
-            return bean != null ? bean : beans.get( DEFAULT_STRATEGY_KEY );
-        }
-        return null;
-    }
-
 
     public void setBeanFactory( ConfigurableListableBeanFactory beanFactory ){
         this.beanFactory = beanFactory;
@@ -95,4 +74,16 @@ public class SPIProxy<T> implements InvocationHandler  {
     }
 
 
+    @Override
+    public Object strategy(Object strategy) {
+        if( !isReady ){
+            log.warn(" SPI<{}> not ready , maybe could not found the strategy bean if circular." , strategyClass );
+
+            return beans.get( strategy );
+        }
+
+        Object bean = beans.get( strategy );
+
+        return bean != null ? bean : beans.get( DEFAULT_STRATEGY_KEY );
+    }
 }
