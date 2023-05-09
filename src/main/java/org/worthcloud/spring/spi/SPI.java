@@ -9,19 +9,14 @@ package org.worthcloud.spring.spi;
  *
  * 通过@Resource注入代理服务，类型为需要策略的服务:
  *
- * @Resource
- * SPI<IService> IService;
- *
- * IService.get("keyA")获取定义了keyA的具体实现
- *
  * @param <T> 接口的名称
  */
 public interface SPI<T> {
 
     /**
      * 获取策略实现
-     * @param key
-     * @return
+     * @param key the strategy key
+     * @return the spring bean
      */
     public T strategy( Object key );
 

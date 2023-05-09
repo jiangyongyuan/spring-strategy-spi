@@ -71,6 +71,17 @@ ITest的实现不用去定义策略name的接口，因为加的策略name可阅�
 定义了一个SPI代理接口，在属性解析到对应的参数时，生成代理类。在项目启动完成后，通过BeanFactory获取全部的实现，读取对应的SPIName定义的key，设置default的实现。
 即完成了Spring中list bean到map bean 的一个实现。具体的话看下源码实现，整个实现非常简单。
 
+### 使用
+
+[Maven central](https://mvnrepository.com/artifact/io.github.jiangyongyuan/spring-strategy-spi/1.0)
+
+```xml
+<dependency>
+    <groupId>io.github.jiangyongyuan</groupId>
+    <artifactId>spring-strategy-spi</artifactId>
+    <version>1.0</version>
+</dependency>
+```
 
 ### SPI Wrapper 的思路
 
@@ -170,4 +181,12 @@ public class ITestB implements ITest{
 Simply use the spring bean with the `@SPIName` annotation ,it is very convenient to obtain the beans that have been registered in the system through the key.
 You don't need to define any more classes, any BeanPostProcessor to register a Map form the BeanFactory.
 
+### Usage
 
+```xml
+<dependency>
+    <groupId>io.github.jiangyongyuan</groupId>
+    <artifactId>spring-strategy-spi</artifactId>
+    <version>1.0</version>
+</dependency>
+```
