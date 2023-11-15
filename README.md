@@ -8,13 +8,9 @@
 程序并不是实现一个算法，而是在运行时根据参数在一组程序中选择对应的算法。
 策略模式在复杂系统中非常常见。
 
-尽管策略模式非常常见，但是在项目中却有非常多不同的代码实现：不同的工程师、不同的策略类可能就定义一套自己的BeanFactory。一个工程里面可能有很多个XXXBeanFactory。
+市场上有不少插件系统，使用较为麻烦，Spring-strategy-spi使用比较简单的方式，通过SPI<Class>.strategy即可在Spring项目中根据名称获取策略类。
 
-我们需要SPI机制，可能更多的是策略模式。比如ExtensionLoader中的Wrapper模式，可能在Spring中通过AOP的模式即可实现。对于SPI的理解，我们更多的应该从构建可扩展系统去了解。
-即提供默认实现的策略，也支持通过不同的上下文、参数，使用对应的策略。
-
-因此，项目名称我们借用SPI的方式，希望在系统设计时，能从整个系统的视角，定义项目中的扩展点，从而支持复杂系统的构建。
-
+关于SPI的命名，是希望在系统设计时，能从整个系统的视角，定义项目中的扩展点，从而支持复杂系统的构建。
 
 ### 核心技术
 
@@ -61,7 +57,7 @@ public class ITestB implements ITest{
 ```
 
 ITest的实现不用去定义策略name的接口，因为加的策略name可阅读性并没有`SPIName`注解来得好。
-不用再为ITest去定义对应的ITestFactory，使用SPI<ITest>即可通过对应的name进行获取。
+也不用再为ITest去定义对应的ITestFactory，使用SPI<ITest>即可通过对应的name进行获取。
 
 ### 实现原理
 
@@ -78,40 +74,6 @@ ITest的实现不用去定义策略name的接口，因为加的策略name可阅�
     <artifactId>spring-strategy-spi</artifactId>
     <version>1.0</version>
 </dependency>
-```
-
-### SPI Wrapper 的思路
-
-如果需要dubbo spi的Wrapper的机制，可以通过aop的方式定义，往往项目里面可能不需要很多层的嵌套，没必要进行一个可嵌套的Wrapper设计。
-
-以下是Spring aop的一个demo参考：
-
-```java
-@Slf4j
-@Aspect
-@Component
-public class SPIWrapper1 implements Ordered {
-
-    @Pointcut(value = "execution(* com.worthcloud.demo.spi.SPITest.test(..))" )
-    public void test(){
-    }
-
-    @Before(value = "com.worthcloud.demo.spi.SPIWrapper1.test() && args(name)" )
-    public void before( String name  ) throws Throwable{
-        log.info("SPIWrapper 1 invoke : test ");
-    }
-
-    @AfterReturning(value = "com.worthcloud.demo.spi.SPIWrapper1.test()" ,returning = "retVal")
-    public void after( String retVal ) throws Throwable{
-        log.info("retVal 1 = " + retVal );
-    }
-
-
-    @Override
-    public int getOrder() {
-        return 2;
-    }
-}
 ```
 
 
