@@ -92,11 +92,11 @@ public class SPIProxyBeanPostProcessor implements SmartInstantiationAwareBeanPos
             });
 
             if(isField && field.getType().isAssignableFrom( SPI.class ) ){
-                log.info( "[SPI] find spi field = {} " , field.getType() );
                 ParameterizedType genericType = (ParameterizedType) field.getGenericType();
                 Type[] actualTypeArguments = genericType.getActualTypeArguments();
                 if( actualTypeArguments.length > 0 ){
                     Class typeClz = (Class)actualTypeArguments[0];
+                    log.info( "[SPI] register : {} " , typeClz );
 
                     elements.add(new ResourceElement(field , null ,genericType.getTypeName() , (Class)genericType.getRawType() ));
 

@@ -36,40 +36,38 @@ public class SPIProxy<T> implements SPI {
 
     public void init(){
         if( !isReady ) {
-            isReady = true;
             Map<String, T> beansOfType = (Map<String, T>) beanFactory.getBeansOfType((Class) strategyClass);
 
             for (Map.Entry e : beansOfType.entrySet()) {
                 T v = (T) e.getValue();
                 findStrategyBean(v);
             }
-
+            isReady = true;
         }
     }
 
 
     /**
-     * 找到@StrategySPI 并注入
+     * 找到@SPIName 并注入
      * @param bean
      */
     private void findStrategyBean(Object bean ){
+        Object key = DEFAULT_STRATEGY_KEY ;
         try {
             SPIName annotation = AnnotationUtils.findAnnotation(bean.getClass(), SPIName.class);
-
-            Object key = DEFAULT_STRATEGY_KEY ;
 
             if( annotation != null ) {
                 key = annotation.value();
             }
 
             if (beans.containsKey(key)) {
-                log.error("[WorthCloud][SPI] duplicate strategy name : {} , bean :{}", key, bean);
-                throw new RuntimeException("[SPILoader] duplicate strategy name : " + bean);
+                log.warn("[WorthCloud][SPI] !!!duplicate strategy name : {} , bean :{}", key, bean);
+//                throw new RuntimeException("[SPIProxy] duplicate strategy name : " + bean);
             }
-
+            log.info("[WorthCloud][SPI] {},{}={}" , strategyClass , key , bean );
             beans.put(key, bean);
         }catch (Exception e ){
-            log.error( "[WorthCloud][SPI] Class {} inject error " , bean.getClass()  , e );
+            log.error( "[WorthCloud][SPI] Class {} inject error,key = {} " , bean.getClass()  , key , e );
         }
     }
 
