@@ -127,7 +127,6 @@
                         </goals>
                         <configuration>
                             <keyname>63453187</keyname>
-                            <passphraseServerId>63453187</passphraseServerId>
                         </configuration>
                     </execution>
                 </executions>
