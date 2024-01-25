@@ -37,7 +37,7 @@ public class SPIFactoryBean<T> implements FactoryBean<T> , BeanFactoryAware  , S
         ProxyFactory proxyFactory = new ProxyFactory();
         proxyFactory.setTarget( proxy );
         proxyFactory.addInterface( interfaceClass );
-
+        proxy.init();
         return (T)proxyFactory.getProxy();
     }
 
@@ -59,6 +59,6 @@ public class SPIFactoryBean<T> implements FactoryBean<T> , BeanFactoryAware  , S
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
-        proxy.init();
+
     }
 }

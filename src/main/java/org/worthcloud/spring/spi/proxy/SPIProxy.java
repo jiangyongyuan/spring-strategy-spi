@@ -62,7 +62,7 @@ public class SPIProxy<T> implements SPI {
 
             if (beans.containsKey(key)) {
                 log.warn("[WorthCloud][SPI] !!!duplicate strategy name : {} , bean :{}", key, bean);
-//                throw new RuntimeException("[SPIProxy] duplicate strategy name : " + bean);
+                throw new RuntimeException("[WorthCloud][SPI] duplicate strategy name : " +bean.getClass().getSimpleName()+ " is "+ key);
             }
             log.info("[WorthCloud][SPI] {},{}={}" , strategyClass , key , bean );
             beans.put(key, bean);
