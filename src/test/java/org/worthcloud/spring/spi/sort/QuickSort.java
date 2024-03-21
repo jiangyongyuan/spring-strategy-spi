@@ -1,14 +1,13 @@
 package org.worthcloud.spring.spi.sort;
 
 import org.springframework.stereotype.Service;
-import org.worthcloud.spring.spi.SPIName;
+import org.worthcloud.spring.spi.SPIKey;
 
 import java.util.Arrays;
 import java.util.function.IntConsumer;
-import java.util.function.IntFunction;
 
 @Service
-@SPIName(value = "Quick")
+@SPIKey(value = "Quick")
 public class QuickSort implements Sort{
 
     @Override

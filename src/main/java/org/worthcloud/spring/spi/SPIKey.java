@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SPIName {
+public @interface SPIKey {
 
     //默认的key:没有定义key就是默认实现
     String value() default SPIProxy.DEFAULT_STRATEGY_KEY;

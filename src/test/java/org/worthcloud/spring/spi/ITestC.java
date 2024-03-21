@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@SPIName("C")
+@SPIKey("C")
 public class ITestC implements ITest{
 
     @Override

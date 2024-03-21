@@ -4,10 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.worthcloud.spring.spi.SPI;
-import org.worthcloud.spring.spi.SPIName;
+import org.worthcloud.spring.spi.SPIKey;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -54,7 +52,7 @@ public class SPIProxy<T> implements SPI {
     private void findStrategyBean(Object bean ){
         Object key = DEFAULT_STRATEGY_KEY ;
         try {
-            SPIName annotation = AnnotationUtils.findAnnotation(bean.getClass(), SPIName.class);
+            SPIKey annotation = AnnotationUtils.findAnnotation(bean.getClass(), SPIKey.class);
 
             if( annotation != null ) {
                 key = annotation.value();
