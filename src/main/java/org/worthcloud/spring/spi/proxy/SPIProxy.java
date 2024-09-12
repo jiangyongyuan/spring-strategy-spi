@@ -79,16 +79,22 @@ public class SPIProxy<T> implements SPI {
         }
     }
 
-
+    /**
+     * 获取策略类
+     * @param strategy the strategy key , it will force to String
+     * @return
+     */
     @Override
     public Object strategy(Object strategy) {
+        String spiKey = strategy instanceof String ? (String)strategy : strategy + "";
+
         if( !isReady ){
             log.warn(" SPI<{}> not ready , maybe could not found the strategy bean if circular." , strategyClass );
 
-            return beans.get( strategy );
+            return beans.get( spiKey );
         }
 
-        Object bean = beans.get( strategy );
+        Object bean = beans.get( spiKey );
 
         return bean != null ? bean : beans.get( DEFAULT_STRATEGY_KEY );
     }

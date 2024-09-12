@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@SPIKey(values = {"C","D"})
+@SPIKey(values = {"C","D","3"})
 public class ITestC implements ITest{
 
     @Override

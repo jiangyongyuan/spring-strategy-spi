@@ -21,7 +21,7 @@ public class TestApplication  {
         test.strategy("B").helloWorld();
         test.strategy("D").helloWorld();
 
-//        test.strategy(3 ).helloWorld();
+        test.strategy(3 ).helloWorld();
 
         Assert.assertNotNull( test.strategy( "A"));
     }
