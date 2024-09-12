@@ -64,10 +64,10 @@ public class SPIProxy<T> implements SPI {
 
             if(keys != null && keys.length == 0 ){
                 if (beans.containsKey(key)) {
-                    log.warn("[WorthCloud][SPI] !!!duplicate strategy name : {} , bean :{}", key, bean);
-                    throw new RuntimeException("[WorthCloud][SPI] duplicate strategy name : " +bean.getClass().getSimpleName()+ " is "+ key);
+                    log.warn("[SPI] !!!duplicate strategy name : {} , bean :{}", key, bean);
+                    throw new RuntimeException("[SPI] duplicate strategy name : " +bean.getClass().getSimpleName()+ " is "+ key);
                 }
-                log.info("[WorthCloud][SPI] {},{}={}" , strategyClass , key , bean );
+                log.info("[SPI] {},{}={}" , strategyClass , key , bean );
                 beans.put(key, bean);
             }
             if(keys != null && keys.length > 0 ){
@@ -75,7 +75,7 @@ public class SPIProxy<T> implements SPI {
                 Arrays.stream(keys).forEach(k->beans.put(k,bean));
             }
         }catch (Exception e ){
-            log.error( "[WorthCloud][SPI] Class {} inject error,key = {} " , bean.getClass()  , key , e );
+            log.error( "[SPI] Class {} inject error,key = {} " , bean.getClass()  , key , e );
         }
     }
 
