@@ -6,6 +6,7 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.worthcloud.spring.spi.SPI;
 import org.worthcloud.spring.spi.SPIKey;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,19 +52,28 @@ public class SPIProxy<T> implements SPI {
      */
     private void findStrategyBean(Object bean ){
         Object key = DEFAULT_STRATEGY_KEY ;
+        Object [] keys = null;
+
         try {
             SPIKey annotation = AnnotationUtils.findAnnotation(bean.getClass(), SPIKey.class);
 
             if( annotation != null ) {
                 key = annotation.value();
+                keys = annotation.values();
             }
 
-            if (beans.containsKey(key)) {
-                log.warn("[WorthCloud][SPI] !!!duplicate strategy name : {} , bean :{}", key, bean);
-                throw new RuntimeException("[WorthCloud][SPI] duplicate strategy name : " +bean.getClass().getSimpleName()+ " is "+ key);
+            if(keys != null && keys.length == 0 ){
+                if (beans.containsKey(key)) {
+                    log.warn("[WorthCloud][SPI] !!!duplicate strategy name : {} , bean :{}", key, bean);
+                    throw new RuntimeException("[WorthCloud][SPI] duplicate strategy name : " +bean.getClass().getSimpleName()+ " is "+ key);
+                }
+                log.info("[WorthCloud][SPI] {},{}={}" , strategyClass , key , bean );
+                beans.put(key, bean);
             }
-            log.info("[WorthCloud][SPI] {},{}={}" , strategyClass , key , bean );
-            beans.put(key, bean);
+            if(keys != null && keys.length > 0 ){
+                //multiple key(strategy) use same bean
+                Arrays.stream(keys).forEach(k->beans.put(k,bean));
+            }
         }catch (Exception e ){
             log.error( "[WorthCloud][SPI] Class {} inject error,key = {} " , bean.getClass()  , key , e );
         }

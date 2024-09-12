@@ -19,7 +19,9 @@ public class TestApplication  {
     public void test(){
         test.strategy("A").helloWorld();
         test.strategy("B").helloWorld();
-        test.strategy(3 ).helloWorld();
+        test.strategy("D").helloWorld();
+
+//        test.strategy(3 ).helloWorld();
 
         Assert.assertNotNull( test.strategy( "A"));
     }

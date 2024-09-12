@@ -16,7 +16,7 @@
 
 Spring-strategy-spi 希望提供一种标准、简单、通用的方法，通过key去获取已经注册的服务，而无需自己去将key、bean put到自定义的一个Factory中。
 Spring-strategy-spi 提供 `SPI<Class>` 代理类，该代理类会加载`<Class>`定义的多个策略实现。
-每个策略类的key，通过注解`@SPIName(key)`定义，以下是代码示例：
+每个策略类的key，通过注解`@SPIKey(key)`定义，以下是代码示例：
 
 ```java
 @SpringBootApplication
@@ -37,7 +37,7 @@ public class TestApplication  {
 }
 
 @Service
-@SPIName("A")
+@SPIKey("A")
 public class ITestA implements ITest{
     @Override
     public void helloWorld() {
@@ -46,7 +46,7 @@ public class ITestA implements ITest{
 }
 
 @Service
-@SPIName("B")
+@SPIKey("B")
 public class ITestB implements ITest{
     @Override
     public void helloWorld() {
@@ -56,12 +56,12 @@ public class ITestB implements ITest{
 
 ```
 
-ITest的实现不用去定义策略name的接口，因为加的策略name可阅读性并没有`SPIName`注解来得好。
+ITest的实现不用去定义策略name的接口，因为加的策略name可阅读性并没有`SPIKey`注解来得好。
 也不用再为ITest去定义对应的ITestFactory，使用SPI<ITest>即可通过对应的name进行获取。
 
 ### 实现原理
 
-定义了一个SPI代理接口，在属性解析到对应的参数时，生成代理类。在项目启动完成后，通过BeanFactory获取全部的实现，读取对应的SPIName定义的key，设置default的实现。
+定义了一个SPI代理接口，在属性解析到对应的参数时，生成代理类。在项目启动完成后，通过BeanFactory获取全部的实现，读取对应的SPIKey定义的key，设置default的实现。
 即完成了Spring中list bean到map bean 的一个实现。具体的话看下源码实现，整个实现非常简单。
 
 ### 使用
@@ -97,7 +97,7 @@ Spring-Strategy-Spi provides a more pragmatic approach to obtain a strategy bean
 #### Introduction
 
 Spring-Strategy-Spi provide `SPI<Class>` proxy bean . which hold the multiple implementations of the `<Class>` interface.
-The multiple strategy bean's key define by the `@SPIName` annotation , here is the example :
+The multiple strategy bean's key define by the `@SPIKey` annotation , here is the example :
 
 ```java
 @SpringBootApplication
@@ -118,7 +118,7 @@ public class TestApplication  {
 }
 
 @Service
-@SPIName("A")
+@SPIKey("A")
 public class ITestA implements ITest{
     @Override
     public void helloWorld() {
@@ -127,7 +127,7 @@ public class ITestA implements ITest{
 }
 
 @Service
-@SPIName("B")
+@SPIKey("B")
 public class ITestB implements ITest{
     @Override
     public void helloWorld() {
@@ -137,7 +137,7 @@ public class ITestB implements ITest{
 
 ```
 
-Simply use the spring bean with the `@SPIName` annotation ,it is very convenient to obtain the beans that have been registered in the system through the key.
+Simply use the spring bean with the `@SPIKey` annotation ,it is very convenient to obtain the beans that have been registered in the system through the key.
 You don't need to define any more classes, any BeanPostProcessor to register a Map form the BeanFactory.
 
 ### Usage

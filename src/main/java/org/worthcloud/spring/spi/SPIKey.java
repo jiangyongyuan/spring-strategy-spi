@@ -11,7 +11,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SPIKey {
 
-    //默认的key:没有定义key就是默认实现
+    /**
+     * 默认的key:没有定义key就是默认实现
+     */
     String value() default SPIProxy.DEFAULT_STRATEGY_KEY;
+
+    /**
+     * 不同的key使用相同的策略
+     * @return
+     */
+    String[] values() default {};
 
 }
